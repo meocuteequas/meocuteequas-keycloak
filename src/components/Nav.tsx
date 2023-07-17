@@ -7,7 +7,7 @@ export default function Nav() {
   const login = () =>
     keycloak.login({
       scope: "videos_read",
-      redirectUri: "http://localhost:5173/secured",
+      redirectUri: "http://localhost:5173/dashboard",
     });
 
   const logout = async () =>
