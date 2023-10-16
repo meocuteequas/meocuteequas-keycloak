@@ -8,12 +8,29 @@ import Welcome from "./pages/welcome";
 import Whatever from "./pages/dashboard";
 import Confidential from "./pages/confidential";
 import { Roles } from "./types";
+import { useEffect, useState } from "react";
+import { supabase } from "./libs/supabaseClient";
+import { Session } from "@supabase/supabase-js";
+import { createContext } from 'react';
+
+export const AppContext = createContext<Session | null>(null);
 
 function App() {
-  return (
-    <>
-      <Nav />
+  const [session, setSession] = useState<Session | null>(null);
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
+  return (
+    <AppContext.Provider value={session}>
+      <Nav />
       <Routes>
         <Route path="/" element={<Welcome />} />
 
@@ -21,7 +38,6 @@ function App() {
           path="/dashboard"
           element={
             <Secured
-              roles={[Roles.Manager, Roles.Developer]}
               children={<Whatever />}
             />
           }
@@ -30,12 +46,12 @@ function App() {
         <Route
           path="/confidential"
           element={
-            <Secured roles={[Roles.Manager]} children={<Confidential />} />
+            <Secured children={<Confidential />} />
           }
         />
         <Route path="/*" element={<NotFound />} />
       </Routes>
-    </>
+    </AppContext.Provider>
   );
 }
 

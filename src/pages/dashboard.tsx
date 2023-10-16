@@ -1,6 +1,5 @@
-import React from "react";
-
 export default function Daskboard() {
+
   return (
     <div
       className="flex flex-col items-center justify-center px-16"

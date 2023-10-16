@@ -1,10 +1,10 @@
 import Keycloak from "keycloak-js";
 
 const keycloak = new Keycloak({
-  realm: "dc-20",
-  clientId: "meocuteequas-react-app",
+  realm: "meocuteequas",
+  clientId: "meocutee-api",
   
-  url: "https://meocuteequas-keycloak.azurewebsites.net/auth",
+  url: "http://localhost:8080/auth",
   
 });
 

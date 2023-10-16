@@ -1,31 +1,10 @@
-import { useKeycloak } from "@react-keycloak/web";
-import { ReactNode } from "react";
-import NotFound from "../pages/404";
-import Loading from "./Loading";
+import { ReactNode, useContext } from "react";
 import UnAuthorized from "../pages/403";
-import { Roles } from "../types";
+import { AppContext } from "../App";
 
-const Secured = ({
-  children,
-  roles,
-}: {
-  children: ReactNode;
-  roles: Roles[];
-}) => {
-  const { initialized, keycloak } = useKeycloak();
-  if (initialized) {
-    if (keycloak.authenticated){
-      return roles.some((role) => keycloak.hasResourceRole(Roles[role])) ? (
-        children
-      ) : (
-        <UnAuthorized />
-      );
-    }
-
-    return <NotFound />;
-  }
-
-  return <Loading />;
+const Secured = ({ children }: { children: ReactNode }) => {
+  const session = useContext(AppContext);
+  return session ? children : <UnAuthorized />;
 };
 
 export default Secured;

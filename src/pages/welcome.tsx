@@ -1,9 +1,5 @@
-import React from "react";
-import { useKeycloak } from "@react-keycloak/web";
+import React, { useEffect } from "react";
 export default function Welcome() {
-  const { keycloak } = useKeycloak();
-  const login = () => keycloak.login();
-
   return (
     <div
       className="flex flex-col items-center justify-center px-16"
@@ -17,7 +13,6 @@ export default function Welcome() {
         where you can explore, connect, and grow. Dive in and let's make
         something extraordinary together!
       </h1>
-
     </div>
   );
 }

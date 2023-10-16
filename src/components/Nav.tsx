@@ -1,17 +1,19 @@
-import { useKeycloak } from "@react-keycloak/web";
 import { Link } from "react-router-dom";
+import { supabase } from "../libs/supabaseClient";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
 export default function Nav() {
-  const { keycloak } = useKeycloak();
+  const session = useContext(AppContext)
 
-  const login = () =>
-    keycloak.login({
-      scope: "videos_read",
-      redirectUri: "http://localhost:5173/dashboard",
+  const login = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: "tom@meocuteequas.com",
+      password: "123",
     });
+  };
 
-  const logout = async () =>
-    keycloak.logout({ redirectUri: "http://localhost:5173/" });
+  const logout = async () => {};
 
   return (
     <div className="flex justify-between items-center text-4xl font-semibold w-screen p-4 px-16">
@@ -35,7 +37,7 @@ export default function Nav() {
           Dashboard
         </Link>
 
-        {keycloak.authenticated ? (
+        {session ? (
           <div
             className="cursor-pointer  me-8"
             onClick={logout}
