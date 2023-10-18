@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { AppContext } from "../App";
 export default function Welcome() {
+  const section = useContext(AppContext)
   return (
     <div
       className="flex flex-col items-center justify-center px-16"
@@ -13,6 +15,7 @@ export default function Welcome() {
         where you can explore, connect, and grow. Dive in and let's make
         something extraordinary together!
       </h1>
+      <p>{section?.access_token}</p>
     </div>
   );
 }

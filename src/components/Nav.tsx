@@ -5,15 +5,25 @@ import { AppContext } from "../App";
 
 export default function Nav() {
   const session = useContext(AppContext)
-
+  
   const login = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: "tom@meocuteequas.com",
+      email: "meocuteequas@email.com",
       password: "123",
     });
+
+    // const { data, error } = await supabase.auth.admin.createUser({
+    //   email: 'meocuteequas@email.com',
+    //   password: '123',
+    //   email_confirm: true,
+    //   user_metadata: { name: 'Yoda' }
+    // })
+
+    console.log(data, error);
+    
   };
 
-  const logout = async () => {};
+  const logout = async () => {const { error } = await supabase.auth.signOut()};
 
   return (
     <div className="flex justify-between items-center text-4xl font-semibold w-screen p-4 px-16">
